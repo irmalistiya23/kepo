@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  password   String
+  createdAt  DateTime @default(now())
+  categories Category[]
+  financialInsights FinancialInsight[]
+  receiptScans ReceiptScan[]
+  transactions Transaction[]
+}
+
+model Category {
+  id        Int     @id @default(autoincrement())
+  userId    Int?
+  name      String
+  type      CategoryType
+  createdAt DateTime @default(now())
+  user      User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum CategoryType {
+  income
+  expense
+}
+
+model FinancialEducation {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  type      EducationType
+  videoUrl  String?
+  createdAt DateTime @default(now())
+}
+
+enum EducationType {
+  article
+  quiz
+  video
+}
+
+model FinancialInsight {
+  id          Int     @id @default(autoincrement())
+  userId      Int
+  month       Int
+  totalIncome Decimal @default(0.00)
+  totalExpense Decimal @default(0.00)
+  balance     Decimal @default(0.00)
+  createdAt   DateTime @default(now())
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ReceiptScan {
+  id           Int     @id @default(autoincrement())
+  userId       Int
+  imageUrl     String
+  extractedText String
+  createdAt    DateTime @default(now())
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id          Int     @id @default(autoincrement())
+  userId      Int
+  amount      Decimal
+  category    String
+  type        TransactionType
+  description String?
+  createdAt   DateTime @default(now())
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum TransactionType {
+  income
+  expense
+}
