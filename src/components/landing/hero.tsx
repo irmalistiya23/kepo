@@ -4,7 +4,7 @@ export default function hero() {
         <section class="container mx-auto px-6 py-12" id="hero">
         <div class="flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-5xl font-bold leading-tight mb-6">
+                <h1 class="text-5xl font-superbold leading-tight mb-6 font-Nunito">
                     <span class="text-yellow-400">Kontrol</span> Ekonomi
                     <br/>Pribadi Online
                 </h1>
