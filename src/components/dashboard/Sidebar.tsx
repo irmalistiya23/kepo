@@ -1,4 +1,8 @@
-import { For } from "solid-js";
+import { For, onMount } from "solid-js";
+import { jwtDecode } from "jwt-decode";
+import { createSignal } from "solid-js";
+import Cookies from "js-cookie";
+
 const sidebarData1: string[] = [
   "Dashboard",
   "Catatan keuangan",
@@ -6,7 +10,17 @@ const sidebarData1: string[] = [
 ];
 const sidebarData2: string[] = ["Goal", "Edukasi Keuangan"];
 
+
 export default (props) => {
+  const [username, setUsername] = createSignal<string>("");
+  onMount(() => {
+    const token = Cookies.get("token");
+    const decoded: {userId:
+      {name:string}
+    } = jwtDecode(token);
+
+    setUsername(decoded.userId.name);
+  })
   return (
     <>
       <button
@@ -47,7 +61,7 @@ export default (props) => {
                 <p>Selamat Datang 🎉</p>
               </span>
               <span class="text-lg font-bold">
-                <p>{"{username}"}</p>
+                <p>{username() ? username() : "Strangers"}</p>
               </span>
             </div>
           </div>

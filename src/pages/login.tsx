@@ -1,8 +1,43 @@
 import { createSignal } from "solid-js";
-export default function login() {
-  const [showPassword, setShowPassword] = createSignal(false);
-  const togglePassword = () => setShowPassword(!showPassword());
-  const handleLogin = () => {};
+import Cookies from "js-cookie";
+import { useNavigate } from "@solidjs/router";
+export default function login() {const [email, setEmail] = createSignal<string>("");
+  const [password, setPassword] = createSignal<string>("");
+  const [showPassword, setShowPassword] = createSignal<boolean>(false);
+  const [loading, setLoading] = createSignal<boolean>(false);
+  const [error, setError] = createSignal<string>("");
+  const navigate=useNavigate();
+  
+  const togglePassword = () => setShowPassword(prev => !prev);
+  
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email(), password: password() }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+  
+      const data = await response.json();
+      Cookies.set("token", data.data.token, { expires: 3 });
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
   return (
     <>
       <div class="min-h-screen flex items-center justify-center p-4">
@@ -24,7 +59,7 @@ export default function login() {
             <h1 class="text-3xl font-bold mb-2">Welcome to KEPO</h1>
             <p class="text-gray-700 mb-6">Masuk dengan Email dan Password</p>
 
-            <form>
+            <form on:submit={handleSubmit}>
               <div class="mb-4">
                 <label for="email" class="block text-gray-700 mb-2">
                   Email:
@@ -51,6 +86,7 @@ export default function login() {
                     id="email"
                     placeholder="Enter your email"
                     class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    on:input={(e: Event) => setEmail((e.target as HTMLInputElement).value)}
                   />
                 </div>
               </div>
@@ -81,6 +117,8 @@ export default function login() {
                     id="password"
                     placeholder="Enter your password"
                     class="w-full py-3 pl-10 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    on:input={(e: Event) => setPassword((e.target as HTMLInputElement).value)}
+                    // value={password()}
                   />
                   <button
                     type="button"
@@ -99,6 +137,7 @@ export default function login() {
                   </button>
                 </div>
               </div>
+              <p class="text-red-600">{error()}</p>
 
               <div class="mb-6 text-right">
                 <a href="#" class="text-black hover:underline text-sm">
@@ -109,7 +148,6 @@ export default function login() {
               <button
                 type="submit"
                 class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-4 rounded-lg transition duration-300"
-                on:click={handleLogin}
               >
                 LOG IN
               </button>

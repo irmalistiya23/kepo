@@ -8,7 +8,7 @@ const config: Config = {
         Nunito: ['Nunito', 'sans-serif'],
       },
       fontWeight: {
-        superbold: "1200",
+        superbold: "900",
       },
     },
   },

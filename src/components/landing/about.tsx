@@ -23,7 +23,7 @@ export default function about() {
     <>
     <div class="mt-14">
       <section class="max-w-6xl mx-auto px-4 py-16" id="about">
-        <h2 class="text-4xl font-bold text-center mb-6">
+        <h2 class="text-4xl font-superbold text-center mb-6 font-Nunito">
           Mengapa Harus Menggunakan KEPO?
         </h2>
 
@@ -39,8 +39,8 @@ export default function about() {
             <div class="w-24 h-24 mb-6">
               <img src={item.img} alt="Koin" class="w-full h-full object-contain" />
             </div>
-            <h3 class="text-xl font-bold mb-3">{item.title}</h3>
-            <p class="text-gray-700">
+            <h3 class="text-2xl font-bold mb-3">{item.title}</h3>
+            <p class="text-gray-700 text-lg">
               {item.description}
             </p>
           </div>

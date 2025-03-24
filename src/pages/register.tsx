@@ -1,9 +1,41 @@
 import { createSignal } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 
 export default function register() {
+  const [email, setEmail] = createSignal<string>("");
+  const [password, setPassword] = createSignal<string>("");
+  const [name, setName] = createSignal<string>("");
   const [showPassword, setShowPassword] = createSignal(false);
-  const togglePassword = () => setShowPassword(!showPassword());
-  const handleRegister = () => {};
+  const togglePassword = () => setShowPassword(prev => !prev);
+  const [loading, setLoading] = createSignal<boolean>(false);
+  const [error, setError] = createSignal<string>("");
+  const navigate=useNavigate();
+
+
+  const handleRegister = async (e: Event) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email(), password: password(), name: name() }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+      navigate("/login");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div class="min-h-screen flex items-center justify-center p-4">
@@ -51,6 +83,7 @@ export default function register() {
                     id="name"
                     placeholder="Enter your name"
                     class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    on:input={(e:Event) => setName((e.target as HTMLInputElement).value)}
                   />
                 </div>
               </div>
@@ -81,6 +114,7 @@ export default function register() {
                     id="email"
                     placeholder="Enter your email"
                     class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    on:input={(e: Event) => setEmail((e.target as HTMLInputElement).value)}
                   />
                 </div>
               </div>
@@ -111,6 +145,7 @@ export default function register() {
                     id="password"
                     placeholder="Enter your password"
                     class="w-full py-3 pl-10 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    on:input={(e: Event) => setPassword((e.target as HTMLInputElement).value)}
                   />
                   <button
                     type="button"

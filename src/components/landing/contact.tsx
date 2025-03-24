@@ -5,8 +5,8 @@ export default () => {
       <div class="bg-[#F5E8D1] p-8 max-w-4xl mx-auto rounded-3xl">
       <div class="flex flex-col md:flex-row p-10 ">
       <div class="md:w-1/2 mb-6 md:mb-0 md:pr-6">
-          <h1 class="text-3xl font-bold mb-3">Hubungi Kami</h1>
-          <p class="mb-8">Punya pertanyaan? Silahkan hubungi kami!</p>
+          <h1 class="text-4xl font-superbold mb-3 font-Nunito">Hubungi Kami</h1>
+          <p class="mb-8 text-lg">Punya pertanyaan? Silahkan hubungi kami!</p>
           
           <div class="space-y-6">
               <div class="flex items-start">
