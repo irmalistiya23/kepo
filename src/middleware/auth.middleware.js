@@ -60,3 +60,24 @@ export const isRegisterValid = async (req = request, res = response, next)=>{
     }
     next();
 }
+
+export const isResetPasswordValid = async (req= request, res = response, next)=>{
+  const {email, newPassword} = req.body;
+  if(!email || !newPassword){
+    return res.status(400).json({
+      message: "data incomplete"
+    });
+  }
+
+  const user = await prisma.user.findUnique({
+    where:{
+      email:email
+    }
+  });
+  if(!user){
+    return res.status(404).json({
+      message: "user not found"
+    });
+  }
+  next();
+}
