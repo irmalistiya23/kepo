@@ -83,3 +83,12 @@ enum TransactionType {
   income
   expense
 }
+
+
+model OTP {
+  id    String @id @default(uuid())
+  key   String
+  otp   String @unique
+  time  String
+}
+

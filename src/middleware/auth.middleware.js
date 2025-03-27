@@ -2,6 +2,7 @@ import { request, response } from "express";
 import { loginSchema, registerSchema } from "../validation/auth.validate.js";
 import { verifyToken } from "../libs/JWT.js";
 import prisma from "../utils/prisma.client.js";
+import { verify } from "crypto";
 
 export const isLoginValid = async (req = request, res = response, next) => {
   const {email, password} = req.body;
@@ -78,6 +79,17 @@ export const isResetPasswordValid = async (req= request, res = response, next)=>
     return res.status(404).json({
       message: "user not found"
     });
+  }
+  next();
+}
+
+export const isAuthorized = (req = request, res = response, next) => {
+  const token = req.cookies.token;
+  if(!token) return res.status(401).json({message:"Unauthorized, token not found"});
+  try{
+    verify(token);
+  }catch(err){
+    return res.status(401).json({message:"Unauthorized, token not valid",token});
   }
   next();
 }

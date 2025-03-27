@@ -1,10 +1,29 @@
 import prisma from "../utils/prisma.client.js";
 import { request, response } from "express";
 import { hash, compare } from "bcrypt";
-import { createToken } from "../libs/JWT.js";
+import { createToken, verifyToken } from "../libs/JWT.js";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
-import { saveOTP, verifyOTP } from "../libs/redis.js";
+import { Strategy } from "passport-google-oauth20";
+import passport from "passport";
+import OTPClient from "../libs/OTP.js";
+
+passport.use(new Strategy({
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: "http://localhost:5000/api/auth/callback"
+},
+  function (accessToken, refreshToken, profile, cb) {
+    return cb(null, profile);
+  }
+));
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
+
+export {passport};
+
+
 
 export const login = async (req = request, res = response)=>{
   const {email, password} = req.body;
@@ -109,7 +128,12 @@ export const resetPassword = async (req = request, res = response)=>{
 export const setOTP = async (req = request, res = response) => {
   const { email } = req.body;
   const otp = crypto.randomInt(100000, 999999).toString();
-  saveOTP(email, otp);
+  const OTPstatus = OTPClient.saveOTP(email, otp);
+  if(!OTPstatus){
+    return res.status(500).json({
+      message:"Error db"
+    })
+  }
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -139,7 +163,7 @@ export const setOTP = async (req = request, res = response) => {
 export const verifyOTPController = async (req = request, res = response) => {
   const { email, otp } = req.body;
 
-  verifyOTP(email, otp, (err, isValid)=>{
+  OTPClient.verifyOTP(email, otp, (err, isValid)=>{
     if (err) {
       console.error("Error saat verifikasi OTP:", err);
       return res.status(500).json({ message: "Terjadi kesalahan server!" });
@@ -152,4 +176,31 @@ export const verifyOTPController = async (req = request, res = response) => {
     return res.status(200).json({ message: "OTP valid, verifikasi sukses!" });
   })
   
+}
+
+export const oauthCallback = (req = request, res = response) => {
+  try{
+    const {sub, given_name, email} = req.user._json;
+    const token = createToken({id: sub, name: given_name, email: email}, "3d");
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 3* 24 * 60 * 60 * 1000
+    });
+    res.redirect("http://localhost:3000/dashboard");
+  }catch(err){
+    res.status(200).json({
+      message:"error",
+      error:err
+    })
+  }
+}
+
+export const getUser = ( req = request, res = response)=>{
+  const {token} = req.cookies;
+  const user = verifyToken(token);
+  res.status(200).json({
+    message:"success",
+    data:user
+  });
 }
