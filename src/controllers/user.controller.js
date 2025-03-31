@@ -140,15 +140,12 @@ export const setOTP = async (req = request, res = response) => {
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587, // Ubah ke 587 kalau 465 error
-    secure: false,
+    port: 465, // Ubah ke 587 kalau 465 error
+    secure: true,
     auth: {
-      user: "kepo.finance.2025@gmail.com",
-      pass: "salcewvepdvplbxu",
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    }
   });
 
   const mailOptions = {
