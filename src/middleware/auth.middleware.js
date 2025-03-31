@@ -2,12 +2,11 @@ import { request, response } from "express";
 import { loginSchema, registerSchema } from "../validation/auth.validate.js";
 import { verifyToken } from "../libs/JWT.js";
 import prisma from "../utils/prisma.client.js";
-import { verify } from "crypto";
 
 export const isLoginValid = async (req = request, res = response, next) => {
   const {email, password} = req.body;
   // cek data yang masuk
-  if(!email || !password) { 
+  if(!email || !password) {
     return res.status(400).json({
       message:"data incomplete"
     });
@@ -83,13 +82,14 @@ export const isResetPasswordValid = async (req= request, res = response, next)=>
   next();
 }
 
-export const isAuthorized = (req = request, res = response, next) => {
+export const isAuthorized = async (req = request, res = response, next) => {
   const token = req.cookies.token;
   if(!token) return res.status(401).json({message:"Unauthorized, token not found"});
   try{
-    verify(token);
+    const result = await verifyToken(token);
+	console.log(result);
   }catch(err){
-    return res.status(401).json({message:"Unauthorized, token not valid",token});
+    return res.status(401).json({message:"Unauthorized, token not valid"});
   }
   next();
 }
