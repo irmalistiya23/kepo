@@ -1,5 +1,5 @@
 import { request, response } from "express";
-import { loginSchema, registerSchema } from "../validation/auth.validate.js";
+import { loginSchema, registerSchema,resetSchema } from "../validation/auth.validate.js";
 import { verifyToken } from "../libs/JWT.js";
 import prisma from "../utils/prisma.client.js";
 
@@ -62,23 +62,43 @@ export const isRegisterValid = async (req = request, res = response, next)=>{
 }
 
 export const isResetPasswordValid = async (req= request, res = response, next)=>{
-  const {email, newPassword} = req.body;
-  if(!email || !newPassword){
+  const {email, newPassword, confirmPassword} = req.body;
+  if(!email || !newPassword || !confirmPassword){
     return res.status(400).json({
-      message: "data incomplete"
+      message: "data incomplete",
+      data: {
+        email,
+        newPassword,
+        confirmPassword
+      }
     });
   }
+
 
   const user = await prisma.user.findUnique({
     where:{
       email:email
     }
   });
+
   if(!user){
     return res.status(404).json({
       message: "user not found"
     });
   }
+
+  const isDataValid = await resetSchema.safeParseAsync({
+    email,
+    newPassword:newPassword,
+    confirmPassword:confirmPassword
+  })
+
+  if(!isDataValid.success){
+    return res.status(400).json({
+      message: isDataValid.error.errors[0].message
+    });
+  }
+
   next();
 }
 
