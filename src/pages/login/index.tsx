@@ -1,34 +1,36 @@
 import { createSignal } from "solid-js";
-import { useNavigate } from "@solidjs/router";
-
-export default function register() {
+import { A } from "@solidjs/router";
+import Layout from "@/components/auth/authLayout.tsx"
+export default function login() {
   const [email, setEmail] = createSignal<string>("");
   const [password, setPassword] = createSignal<string>("");
-  const [name, setName] = createSignal<string>("");
-  const [showPassword, setShowPassword] = createSignal(false);
-  const togglePassword = () => setShowPassword(prev => !prev);
+  const [showPassword, setShowPassword] = createSignal<boolean>(false);
   const [loading, setLoading] = createSignal<boolean>(false);
   const [error, setError] = createSignal<string>("");
-  const navigate=useNavigate();
+  const navigate = (url: string) => {
+    window.location.href = url;
+  };
 
+  const togglePassword = () => setShowPassword((prev) => !prev);
 
-  const handleRegister = async (e: Event) => {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-  
+
     try {
-      const response = await fetch("http://localhost:5000/api/register", {
+      const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email(), password: password(), name: name() }),
+        credentials: "include",
+        body: JSON.stringify({ email: email(), password: password() }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Login failed");
       }
-      navigate("/login");
+      navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {
@@ -38,56 +40,8 @@ export default function register() {
 
   return (
     <>
-      <div class="min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full flex flex-col md:flex-row">
-          <div class="w-full md:w-1/2 flex items-center justify-center min-h-[300px] md:min-h-[500px] overflow-hidden">
-            <img
-              src="public/img/login.jpg"
-              alt="Login Image"
-              class="w-full h-full object-cover"
-            />
-          </div>
-
-          <div class="w-full md:w-1/2 p-8">
-            <div class="flex justify-start mb-8">
-              <img src="public/img/logo.png" alt="" class="w-40" />
-            </div>
-
-            <h1 class="text-3xl font-bold mb-2">Welcome to KEPO</h1>
-            <p class="text-gray-700 mb-6">Register dengan Email dan Password</p>
-
-            <form>
-              <div class="mb-4">
-                <label for="name" class="block text-gray-700 mb-2">
-                  Name:
-                </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    id="name"
-                    placeholder="Enter your name"
-                    class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    on:input={(e:Event) => setName((e.target as HTMLInputElement).value)}
-                  />
-                </div>
-              </div>
-
+      <Layout type="login" title="Welcome to KEPO" description="Login using Email and Passord">
+      <form on:submit={handleSubmit}>
               <div class="mb-4">
                 <label for="email" class="block text-gray-700 mb-2">
                   Email:
@@ -114,12 +68,14 @@ export default function register() {
                     id="email"
                     placeholder="Enter your email"
                     class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    on:input={(e: Event) => setEmail((e.target as HTMLInputElement).value)}
+                    on:input={(e: Event) =>
+                      setEmail((e.target as HTMLInputElement).value)
+                    }
                   />
                 </div>
               </div>
 
-              <div class="mb-8">
+              <div class="mb-4">
                 <label for="password" class="block text-gray-700 mb-2">
                   Password:
                 </label>
@@ -145,7 +101,10 @@ export default function register() {
                     id="password"
                     placeholder="Enter your password"
                     class="w-full py-3 pl-10 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    on:input={(e: Event) => setPassword((e.target as HTMLInputElement).value)}
+                    on:input={(e: Event) =>
+                      setPassword((e.target as HTMLInputElement).value)
+                    }
+                    // value={password()}
                   />
                   <button
                     type="button"
@@ -170,48 +129,28 @@ export default function register() {
                   </button>
                 </div>
               </div>
+              <p class="text-red-600">{error()}</p>
+
+              <div class="mb-6 text-right">
+                  <A
+                    href="/login/getOTP"
+                    class="text-black hover:underline text-sm"
+                  >
+                    Lupa Password?
+                  </A>
+              </div>
 
               <button
                 type="submit"
                 class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-4 rounded-lg transition duration-300"
-                on:click={handleRegister}
               >
-                REGISTER
+                LOG IN
               </button>
 
-              <div class="my-6 flex items-center justify-center">
-                <span class="border-t border-gray-300 flex-grow mr-3"></span>
-                <span class="text-gray-500">OR</span>
-                <span class="border-t border-gray-300 flex-grow ml-3"></span>
-              </div>
 
-              <button
-                type="button"
-                class="w-full border border-gray-300 flex items-center justify-center py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-300"
-              >
-                <img
-                  src="https://cdn.cdnlogo.com/logos/g/35/google-icon.svg"
-                  alt="Google logo"
-                  class="w-5 h-5 mr-2"
-                />
-                <span>Register with Google account</span>
-              </button>
             </form>
-
-            <div class="mt-6 text-center">
-              <p class="text-gray-700">
-                Sudah memiliki akun?
-                <a
-                  href="/login"
-                  class="text-black font-semibold hover:underline"
-                >
-                  Login ke KEPO
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+              
+      </Layout>
     </>
   );
 }

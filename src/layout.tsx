@@ -1,36 +1,50 @@
-import { Suspense, type Component, Switch, Match } from "solid-js";
-import Navbar from "./components/landing/navbar.tsx";
-import DashboardSidebar from "@/components/dashboard/Sidebar.tsx";
+import { Suspense, type Component } from "solid-js";
 import { useLocation } from "@solidjs/router";
 
-const App: Component = (props: { children: Element }) => {
-  const location = useLocation();
-  const LandingPageNavbarRoutes = ["/"];
-  const DashboardBase = "/dashboard";
-  const DashboardPageSidebarRoutes = ["", "/about"].map(
-    (path) => DashboardBase + path
-  );
+import Navbar from "@/components/landing/navbar.tsx";
+import DashboardSidebar from "@/components/dashboard/Sidebar.tsx";
 
-  const Content = (kelas:string = "")=>(
-    <main class={kelas}>
+// Utility function to generate route patterns
+const createRoutePatterns = (base: string, paths: string[]): string[] => 
+  paths.map(path => `${base}${path}`);
+
+const App: Component = (props: {children: Element|any}) => {
+  const location = useLocation();
+
+  // Define route groups
+  const ROUTES = {
+    landing: createRoutePatterns('/', ['', '/']),
+    dashboard: createRoutePatterns('/dashboard', ['', '/', '/about'])
+  };
+
+  // Reusable content wrapper with optional class
+  const ContentWrapper = (className = '') => (
+    <main class={className}>
       <Suspense>{props.children}</Suspense>
     </main>
   );
 
-  return (
-    <Switch>
-      <Match when={LandingPageNavbarRoutes.includes(location.pathname)}>
-        <Navbar />
-        {Content("mt-8")}
-      </Match>
+  // Determine the appropriate layout based on current route
+  const determineLayout = () => {
+    const { pathname } = location;
 
-      <Match when={DashboardPageSidebarRoutes.includes(location.pathname)}>
-        <DashboardSidebar>{Content()}</DashboardSidebar>
-      </Match>
+    if (ROUTES.landing.includes(pathname)) {
+      return (
+        <>
+          <Navbar />
+          {ContentWrapper('mt-8')}
+        </>
+      );
+    }
 
-      <Match when={true}>{Content()}</Match>
-    </Switch>
-  );
+    if (ROUTES.dashboard.includes(pathname)) {
+      return <DashboardSidebar>{ContentWrapper()}</DashboardSidebar>;
+    }
+
+    return ContentWrapper();
+  };
+
+  return determineLayout();
 };
 
 export default App;

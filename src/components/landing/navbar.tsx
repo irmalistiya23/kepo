@@ -1,7 +1,10 @@
 // Navbar.tsx
 import { createSignal, onMount, onCleanup } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 
 const Navbar = () => {
+  // const navigate = useNavigate();
+  const navigateWindow = (url:string) => { window.location.href = url; };
   const [isMenuOpen, setIsMenuOpen] = createSignal(false);
   let navbarRef: HTMLElement | undefined;
 
@@ -57,11 +60,12 @@ const Navbar = () => {
             <div class="absolute h-10 w-28 sm:w-40 bg-black flex justify-center items-center rounded-full border-2 border-black text-black transform translate-x-1 translate-y-1">
               <p>Login</p>
             </div>
-            <a href="/login">
-            <button class="relative h-10 w-28 sm:w-40 bg-yellow-400 flex justify-center items-center rounded-full border-2 border-black text-black active:transform active:translate-x-1 active:translate-y-1">
+            <button
+              class="relative h-10 w-28 sm:w-40 bg-yellow-400 flex justify-center items-center rounded-full border-2 border-black text-black active:transform active:translate-x-1 active:translate-y-1"
+              on:click={() => navigateWindow("http://localhost:3000/login")}
+            >
               <p>Login</p>
             </button>
-            </a>
           </div>
         </div>
 

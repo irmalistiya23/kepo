@@ -19,7 +19,7 @@ export default defineConfig({
     extensions : ["tsx", "ts", "jsx", "js", "json"],
     alias: {
       '@': '/src/',
-
+      '@public': '/public/'
     },
   }
 });
