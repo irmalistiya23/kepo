@@ -113,3 +113,24 @@ export const isAuthorized = async (req = request, res = response, next) => {
   }
   next();
 }
+
+export const isSetOTPValid = async (req = request, res = response, next)=>{
+  const {email} = req.body;
+  try{
+    const user = await prisma.user.findUnique({
+      where:{
+        email:email
+      }
+    });
+    if(!user){
+      return res.status(400).json({
+        message:"user not found"
+      });
+    }
+    next();
+  }catch(err){
+    return res.status(404).json({
+      message:"error, user not found"
+    })
+  }
+}

@@ -18,7 +18,17 @@ app.use(cors({
 app.use(express.json()); 
 app.use(cookieParser());
 
-app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
+app.use(session({
+  secret: "your-secret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    secure: true, // Pastikan pakai HTTPS
+    sameSite: "none", // Biar bisa dipakai cross-site
+  }
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
