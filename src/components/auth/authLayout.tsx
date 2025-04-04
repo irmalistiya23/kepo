@@ -1,6 +1,7 @@
 import loginImg from "@public/img/login.jpg";
 import logo from "@public/img/logo.png";
 import { A } from "@solidjs/router";
+import githubLogo from "@public/svg/github-mark.svg"
 type AuthAction = "login" | "register";
 
 const isAuthAction = (props: { type: AuthAction }) => {
@@ -14,7 +15,7 @@ const isAuthAction = (props: { type: AuthAction }) => {
         </div>
         <button
           type="button"
-          class="w-full border border-gray-300 flex items-center justify-center py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-300 mb-10"
+          class="w-full border border-gray-300 flex items-center justify-center py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-300 mb-5"
           onClick={() => {
             window.open("http://localhost:5000/api/auth/google", "_self");
           }}
@@ -25,6 +26,20 @@ const isAuthAction = (props: { type: AuthAction }) => {
             class="w-5 h-5 mr-2"
           />
           <span>Login with Google account</span>
+        </button>
+        <button
+          type="button"
+          class="w-full border border-gray-300 flex items-center justify-center py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-300 mb-10"
+          onClick={() => {
+            window.open("http://localhost:5000/api/auth/github", "_self");
+          }}
+        >
+          <img
+            src={githubLogo}
+            alt="Github logo"
+            class="w-5 h-5 mr-2"
+          />
+          <span>Login with Github account</span>
         </button>
         <p class="text-gray-700">
           Belum memiliki akun? 

@@ -12,3 +12,16 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.coin {
+      animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.coin-1 { animation-delay: 0s; }
+.coin-2 { animation-delay: 0.5s; }
+.coin-3 { animation-delay: 1s; }
+.coin-4 { animation-delay: 1.5s; }
