@@ -1,7 +1,7 @@
-import { A } from "@solidjs/router";
 import { createSignal } from "solid-js";
-import Layout from "@/components/auth/authLayout.tsx";
-import Timer from "@/components/auth/Timer.tsx";
+import Layout from "@/components/layout/auth/authLayout.tsx";
+import Timer from "@/components/ui/auth/Timer.tsx";
+import auth from "@/lib/api/auth.ts";
 export default function () {
   const [email, setEmail] = createSignal<string>("");
   const [isSubmit, setIsSubmit] = createSignal<boolean>(false);
@@ -15,12 +15,7 @@ export default function () {
     try {
       setIsSubmit(true);
       setIsCounterDone(false);
-      const response = await fetch("http://localhost:5000/api/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email() }),
-      });
-      
+      const response = await auth.getOTP(email);
       if (!response.ok) {
         setIsSubmit(false);
         setIsCounterDone(true);

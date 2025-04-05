@@ -1,6 +1,5 @@
 // Navbar.tsx
 import { createSignal, onMount, onCleanup } from "solid-js";
-import { useNavigate } from "@solidjs/router";
 
 const Navbar = () => {
   // const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { A } from "@solidjs/router";
-import Layout from "@/components/auth/authLayout.tsx"
+import Layout from "@/components/layout/auth/authLayout.tsx";
 
 export default function register() {
   const navigateWindow = (url:string) => { window.location.href = `http://localhost:3000${url}`; };

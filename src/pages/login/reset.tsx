@@ -1,6 +1,6 @@
-import Layout from "@/components/auth/authLayout.tsx";
+import Layout from "@/components/layout/auth/authLayout.tsx";
 import { createSignal, onMount} from "solid-js";
-import { A } from "@solidjs/router";
+import auth from "@/lib/api/auth.ts"
 
 export default () => {
     const [ConfirmPassword, setConfirmPassword] = createSignal<string>("");
@@ -27,16 +27,7 @@ export default () => {
         return;
       }
       try {
-        const response = await fetch("http://localhost:5000/api/reset", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ email:email ,newPassword: Password(), confirmPassword: ConfirmPassword() }),
-        });
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Reset failed");
-        }
+        await auth.reset(email, Password, ConfirmPassword);
         navigate("/login");
       } catch (err) {
         setError(err instanceof Error ? err.message : "Terjadi kesalahan");

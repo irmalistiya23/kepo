@@ -1,5 +1,6 @@
 import { For, onMount } from "solid-js";
 import { createSignal } from "solid-js";
+import auth from "@/lib/api/auth.ts";
 
 const sidebarData1: string[] = [
   "Dashboard",
@@ -13,20 +14,7 @@ const sidebarData2: string[] = ["Goal",
 export default (props: { children: Element | any }) => {
   const [username, setUsername] = createSignal<string>("");
   onMount(async () => {
-    const result = await fetch("http://localhost:5000/api/auth/user", {
-      method: "GET",
-      credentials: "include",
-    });
-    const raw: {
-      message: string;
-      data: {
-        userId: {
-          id: number;
-          name: string;
-          email: string;
-        };
-      };
-    } = await result.json();
+    const raw = await auth.user()
     console.log(raw);
 
     if (raw.message) {

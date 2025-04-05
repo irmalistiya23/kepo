@@ -2,8 +2,8 @@ import logo from "@public/img/logo.png";
 import main from "@public/img/datadiri/Group249.png";
 import coin from "@public/img/datadiri/gambarkoin.png";
 import { Switch, Match } from "solid-js";
-import Datadiri from "./datadiri.tsx";
-import Kelola from "./kelola.tsx";
+import Datadiri from "@/components/ui/datadiri/datadiri.tsx";
+import Kelola from "@/components/ui/datadiri/kelola.tsx";
 
 import { JSX } from "solid-js";
 

@@ -1,6 +1,7 @@
-import Layout from "@/components/auth/authLayout.tsx";
+import Layout from "@/components/layout/auth/authLayout.tsx";
 import { createSignal, onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";
+import auth from "@/lib/api/auth.ts"
 
 export default () => {
   const [otp, setOtp] = createSignal<string[]>(["", "", "", "", "", ""]);
@@ -57,24 +58,15 @@ export default () => {
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    const email = sessionStorage.getItem("email");
+    const email: string = sessionStorage.getItem("email");
     const otpData: string = otp().join("");
     if (otpData.length < 6) {
       setError("Please enter a valid OTP code.");
       return;
     }
     try{
-      const response = await fetch("http://localhost:5000/api/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp: otpData }),
-      });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to verify OTP.");
-      }
-      const data = await response.json();
+      const data = await auth.sendOTP(email, otpData);
       navigate("/login/reset");
       sessionStorage.setItem("token", data);
     }catch(err){

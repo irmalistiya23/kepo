@@ -1,6 +1,7 @@
 import { createSignal } from "solid-js";
 import { A } from "@solidjs/router";
-import Layout from "@/components/auth/authLayout.tsx"
+import Layout from "@/components/layout/auth/authLayout.tsx";
+import auth from "@/lib/api/auth.ts"
 export default function login() {
   const [email, setEmail] = createSignal<string>("");
   const [password, setPassword] = createSignal<string>("");
@@ -19,17 +20,7 @@ export default function login() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email: email(), password: password() }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
-      }
+      await auth.login(email, password);
       navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");

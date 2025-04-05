@@ -1,4 +1,4 @@
-import Layout from "@/components/datadiri/layoutMaster.tsx";
+import Layout from "@/components/layout/datadiri/layout";
 import { createSignal } from "solid-js";
 
 type PageType = "datadiri" | "kelola";

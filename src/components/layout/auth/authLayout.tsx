@@ -11,7 +11,7 @@ const isAuthAction = (props: { type: AuthAction }) => {
         <div class="my-6 flex items-center justify-center">
           <span class="border-t border-gray-300 flex-grow mr-3"></span>
           <span class="text-gray-500">OR</span>
-          <span class="border-t border-gray-300 flex-grow ml-3"></span>
+          <span class="border-t border-gray-300 flex-grow ml-3 "></span>
         </div>
         <button
           type="button"

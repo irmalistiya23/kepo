@@ -1,8 +1,8 @@
 import { Suspense, type Component } from "solid-js";
 import { useLocation } from "@solidjs/router";
 
-import Navbar from "@/components/landing/navbar.tsx";
-import DashboardSidebar from "@/components/dashboard/Sidebar.tsx";
+import Navbar from "./components/layout/landing/navbar.tsx";
+import Sidebar from "./components/layout/dashboard/Sidebar.tsx";
 
 // Utility function to generate route patterns
 const createRoutePatterns = (base: string, paths: string[]): string[] => 
@@ -38,7 +38,7 @@ const App: Component = (props: {children: Element|any}) => {
     }
 
     if (ROUTES.dashboard.includes(pathname)) {
-      return <DashboardSidebar>{ContentWrapper()}</DashboardSidebar>;
+      return <Sidebar>{ContentWrapper()}</Sidebar>;
     }
 
     return ContentWrapper();
