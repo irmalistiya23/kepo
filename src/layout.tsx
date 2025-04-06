@@ -14,7 +14,7 @@ const App: Component = (props: {children: Element|any}) => {
   // Define route groups
   const ROUTES = {
     landing: createRoutePatterns('/', ['', '/']),
-    dashboard: createRoutePatterns('/dashboard', ['', '/', '/about'])
+    dashboard: createRoutePatterns('/dashboard', ['', '/', '/profile'])
   };
 
   // Reusable content wrapper with optional class

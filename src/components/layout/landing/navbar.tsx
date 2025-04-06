@@ -61,7 +61,7 @@ const Navbar = () => {
             </div>
             <button
               class="relative h-10 w-28 sm:w-40 bg-yellow-400 flex justify-center items-center rounded-full border-2 border-black text-black active:transform active:translate-x-1 active:translate-y-1"
-              on:click={() => navigateWindow("http://localhost:3000/login")}
+              on:click={() => navigateWindow("/login")}
             >
               <p>Login</p>
             </button>
