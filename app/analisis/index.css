@@ -1,0 +1,504 @@
+.analisis-container {
+    padding: 1.5rem;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #FFF7ED, #FFFFFF, #FFEDD5);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .analisis-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    background-size: 100px 100px;
+  }
+  
+  .analisis-content {
+    position: relative;
+    z-index: 10;
+  }
+  
+  .analisis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .analisis-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #F97316, #FB923C);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: black;
+    display: flex;
+    align-items: center;
+  }
+
+  .analisis-timestamp {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+  }
+  
+  .analisis-timestamp-icon {
+    font-size: 1.25rem;
+  }
+  
+  .analisis-timestamp-text {
+    font-size: 0.875rem;
+    color: #4B5563;
+    font-weight: 500;
+  }
+  
+  .analisis-cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .analisis-cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .analisis-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: auto;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .analisis-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+  }
+  
+  .analisis-card-income {
+    border-left: 4px solid #F97316;
+  }
+  
+  .analisis-card-expense {
+    border-left: 4px solid #FB923C;
+  }
+  
+  .analisis-card-balance {
+    border-left: 4px solid #FDBA74;
+  }
+  
+  .analisis-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .analisis-card-label {
+    color: #4B5563;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .analisis-card-icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .analisis-card-icon-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+  .analisis-pie-container {
+    display: flex;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(249, 115, 22, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .analisis-pie-container:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .analisis-pie-chart {
+    flex: 1;
+    min-height: 300px;
+  }
+  
+  .analisis-paid-categories {
+    flex: 1;
+    padding: 1rem;
+    border-left: 1px solid rgba(249, 115, 22, 0.1);
+    overflow-y: auto;
+  }
+  
+  .analisis-paid-categories-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4B5563;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(249, 115, 22, 0.1);
+  }
+  
+  .analisis-paid-categories-list {
+    list-style: none;
+    padding: 0;
+  margin: 0;
+}
+
+  .analisis-paid-category {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(249, 115, 22, 0.1);
+  }
+  
+  .analisis-paid-category:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .analisis-paid-category-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  
+  .analisis-paid-category-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .analisis-paid-category-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4B5563;
+  }
+  
+  .analisis-paid-category-date {
+    font-size: 0.75rem;
+    color: #6B7280;
+    font-weight: 500;
+  }
+  
+  .analisis-paid-category-amount {
+    font-size: 0.875rem;
+    color: #4B5563;
+    font-weight: 500;
+  }
+  
+  .analisis-paid-category-bar-container {
+    position: relative;
+    height: 8px;
+    background: rgba(249, 115, 22, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  
+  .analisis-paid-category-bar {
+    position: absolute;
+    height: 100%;
+    background: #F97316;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  
+  .analisis-paid-category-percentage {
+    position: absolute;
+    right: 0;
+    top: -18px;
+    font-size: 0.75rem;
+    color: #4B5563;
+    font-weight: 500;
+  }
+  
+  .analisis-pie-chart-container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .analisis-card-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    font-family:'Times New Roman', Times, serif;
+  }
+  
+  .analisis-card-income .analisis-card-value {
+    color: #F97316;
+  }
+  
+  .analisis-card-expense .analisis-card-value {
+    color: #FB923C;
+  }
+  
+  .analisis-card-balance .analisis-card-value {
+    color: #FDBA74;
+  }
+  
+  .analisis-card-change {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .analisis-card-change.positive {
+    color: #F97316;
+  }
+  
+  .analisis-card-change.negative {
+    color: #FB923C;
+  }
+  
+  .analisis-card-change::before {
+    content: "";
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    margin-right: 0.25rem;
+  }
+  
+  .analisis-card-change.positive::before {
+    background-color: #F97316;
+  }
+  
+  .analisis-card-change.negative::before {
+    background-color: #FB923C;
+  }
+  
+  .analisis-section {
+    margin-top: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid #F97316;
+  }
+  
+  .analisis-section:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .analisis-section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #F97316;
+    display: flex;
+    align-items: center;
+  }
+  
+  .analisis-section-title span {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .analisis-section-title-text {
+    color: black;
+  }
+  
+  /* Chart Styles */
+  .recharts-tooltip-wrapper {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .recharts-default-tooltip {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.75rem;
+  }
+  
+  .recharts-legend-item {
+    color: #374151;
+    font-weight: 500;
+  }
+  
+  .recharts-text {
+    fill: #374151;
+  }
+  
+  .recharts-cartesian-axis-tick-value {
+    fill: #4B5563;
+    font-size: 0.875rem;
+  }
+  
+  .recharts-line-curve {
+    stroke: url(#gradient);
+    stroke-width: 3;
+  }
+  
+  .recharts-dot {
+    fill: #F97316;
+    stroke: white;
+    stroke-width: 2;
+  }
+
+  .analisis-chart-container {
+    display: flex;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(249, 115, 22, 0.1);
+  }
+
+  .analisis-chart {
+    flex: 2;
+    min-height: 300px;
+  }
+
+  .analisis-expense-categories {
+    flex: 1;
+    padding: 1rem;
+    border-left: 1px solid rgba(249, 115, 22, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .analisis-expense-categories-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4B5563;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(249, 115, 22, 0.1);
+  }
+
+  .analisis-expense-categories-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .analisis-expense-category {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(249, 115, 22, 0.1);
+  }
+
+  .analisis-expense-category:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .analisis-expense-category-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .analisis-expense-category-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .analisis-expense-category-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4B5563;
+  }
+
+  .analisis-expense-category-countdown {
+    font-size: 0.75rem;
+    color: #6B7280;
+    font-weight: 500;
+  }
+
+  .analisis-expense-category-amount {
+    font-size: 0.875rem;
+    color: #4B5563;
+    font-weight: 500;
+  }
+
+  .analisis-expense-category-bar-container {
+    position: relative;
+    height: 8px;
+    background: rgba(249, 115, 22, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+
+  .analisis-expense-category-bar {
+    position: absolute;
+    height: 100%;
+    background: #F97316;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  .analisis-expense-category-percentage {
+    position: absolute;
+    right: 0;
+    top: -18px;
+    font-size: 0.75rem;
+    color: #4B5563;
+    font-weight: 500;
+  }
+
+  .analisis-expense-category-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .analisis-expense-category-countdown {
+    font-size: 0.75rem;
+    color: #6B7280;
+    font-weight: 500;
+  }
+
+  .analisis-expense-category-countdown.urgent {
+    color: #EF4444;
+    font-weight: 600;
+  }
