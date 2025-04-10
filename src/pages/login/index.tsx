@@ -1,34 +1,26 @@
 import { createSignal } from "solid-js";
-import Cookies from "js-cookie";
-import { useNavigate } from "@solidjs/router";
-export default function login() {const [email, setEmail] = createSignal<string>("");
+import { A } from "@solidjs/router";
+import Layout from "@/components/layout/auth/authLayout.tsx";
+import auth from "@/lib/api/auth.ts"
+export default function login() {
+  const [email, setEmail] = createSignal<string>("");
   const [password, setPassword] = createSignal<string>("");
   const [showPassword, setShowPassword] = createSignal<boolean>(false);
   const [loading, setLoading] = createSignal<boolean>(false);
   const [error, setError] = createSignal<string>("");
-  const navigate=useNavigate();
-  
-  const togglePassword = () => setShowPassword(prev => !prev);
-  
+  const navigate = (url: string) => {
+    window.location.href = url;
+  };
+
+  const togglePassword = () => setShowPassword((prev) => !prev);
+
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-  
+
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email(), password: password() }),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
-      }
-  
-      const data = await response.json();
-      Cookies.set("token", data.data.token, { expires: 3 });
+      await auth.login(email, password);
       navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
@@ -36,30 +28,11 @@ export default function login() {const [email, setEmail] = createSignal<string>(
       setLoading(false);
     }
   };
-  
 
   return (
     <>
-      <div class="min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-4xl w-full flex flex-col md:flex-row">
-          <div class="w-full md:w-1/2 flex items-center justify-center overflow-hidden">
-            <img
-              src="public/img/login.jpg"
-              alt="Login Image"
-              class="w-full h-full object-cover"
-              width={"55"}
-            />
-          </div>
-
-          <div class="w-full md:w-1/2 p-8">
-            <div class="flex justify-start mb-8">
-                <img src="public/img/logo.png" alt=""  class="w-40"/>
-            </div>
-
-            <h1 class="text-3xl font-bold mb-2">Welcome to KEPO</h1>
-            <p class="text-gray-700 mb-6">Masuk dengan Email dan Password</p>
-
-            <form on:submit={handleSubmit}>
+      <Layout type="login" title="Welcome to KEPO" description="Login using Email and Passord">
+      <form on:submit={handleSubmit}>
               <div class="mb-4">
                 <label for="email" class="block text-gray-700 mb-2">
                   Email:
@@ -86,7 +59,9 @@ export default function login() {const [email, setEmail] = createSignal<string>(
                     id="email"
                     placeholder="Enter your email"
                     class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    on:input={(e: Event) => setEmail((e.target as HTMLInputElement).value)}
+                    on:input={(e: Event) =>
+                      setEmail((e.target as HTMLInputElement).value)
+                    }
                   />
                 </div>
               </div>
@@ -113,11 +88,13 @@ export default function login() {const [email, setEmail] = createSignal<string>(
                     </svg>
                   </div>
                   <input
-                    type={showPassword()? "text" : "password"}
+                    type={showPassword() ? "text" : "password"}
                     id="password"
                     placeholder="Enter your password"
                     class="w-full py-3 pl-10 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                    on:input={(e: Event) => setPassword((e.target as HTMLInputElement).value)}
+                    on:input={(e: Event) =>
+                      setPassword((e.target as HTMLInputElement).value)
+                    }
                     // value={password()}
                   />
                   <button
@@ -132,7 +109,13 @@ export default function login() {const [email, setEmail] = createSignal<string>(
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
-                      <path d={showPassword() ? "M4.318 4.318a1 1 0 011.414 0L10 8.586l4.268-4.268a1 1 0 111.464 1.364l-4.268 4.268 4.268 4.268a1 1 0 01-1.464 1.364L10 11.414l-4.268 4.268a1 1 0 01-1.464-1.364l4.268-4.268-4.268-4.268a1 1 0 010-1.414z" : "M10 3C5 3 1 10 1 10s4 7 9 7 9-7 9-7-4-7-9-7zm0 12a5 5 0 110-10 5 5 0 010 10z"} />
+                      <path
+                        d={
+                          showPassword()
+                            ? "M4.318 4.318a1 1 0 011.414 0L10 8.586l4.268-4.268a1 1 0 111.464 1.364l-4.268 4.268 4.268 4.268a1 1 0 01-1.464 1.364L10 11.414l-4.268 4.268a1 1 0 01-1.464-1.364l4.268-4.268-4.268-4.268a1 1 0 010-1.414z"
+                            : "M10 3C5 3 1 10 1 10s4 7 9 7 9-7 9-7-4-7-9-7zm0 12a5 5 0 110-10 5 5 0 010 10z"
+                        }
+                      />
                     </svg>
                   </button>
                 </div>
@@ -140,9 +123,12 @@ export default function login() {const [email, setEmail] = createSignal<string>(
               <p class="text-red-600">{error()}</p>
 
               <div class="mb-6 text-right">
-                <a href="#" class="text-black hover:underline text-sm">
-                  Lupa Password?
-                </a>
+                  <A
+                    href="/login/getOTP"
+                    class="text-black hover:underline text-sm"
+                  >
+                    Lupa Password?
+                  </A>
               </div>
 
               <button
@@ -152,39 +138,10 @@ export default function login() {const [email, setEmail] = createSignal<string>(
                 LOG IN
               </button>
 
-              <div class="my-6 flex items-center justify-center">
-                <span class="border-t border-gray-300 flex-grow mr-3"></span>
-                <span class="text-gray-500">OR</span>
-                <span class="border-t border-gray-300 flex-grow ml-3"></span>
-              </div>
 
-              <button
-                type="button"
-                class="w-full border border-gray-300 flex items-center justify-center py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-300"
-              >
-                <img
-                  src="https://cdn.cdnlogo.com/logos/g/35/google-icon.svg"
-                  alt="Google logo"
-                  class="w-5 h-5 mr-2"
-                />
-                <span>Enter with Google account</span>
-              </button>
             </form>
-
-            <div class="mt-6 text-center">
-              <p class="text-gray-700">
-                Belum memiliki akun? 
-                <a
-                  href="/register"
-                  class="text-black font-semibold hover:underline"
-                >
-                  Registrasi ke KEPO
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+              
+      </Layout>
     </>
   );
 }

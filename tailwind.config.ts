@@ -10,6 +10,9 @@ const config: Config = {
       fontWeight: {
         superbold: "900",
       },
+      dropShadow: {
+        yellow: '6px 6px 0px #facc15', // warna kuning (yellow-400)
+      }
     },
   },
   plugins: [],
