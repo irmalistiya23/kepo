@@ -18,7 +18,7 @@ export const createTransaction = async ( request, response ) => {
                 category: category,
                 type: type,
                 description: description,
-                userId: request.user.id
+                userId: request.user.userId
             }
         });
 
