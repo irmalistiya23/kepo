@@ -1,6 +1,9 @@
 import { request, response } from "express";
 import prisma  from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import fs from 'fs';
+import path from 'path';
+
 
 export const createTransaction = async ( request, response ) => {
     try{
@@ -33,3 +36,40 @@ export const createTransaction = async ( request, response ) => {
         });
     }
 };
+
+const OCRsementara = async (imagePath) => {
+    return `Simulasi hasil OCR dari: ${imagePath}`;
+}
+
+export const createReceipt = async (request, response) => {
+    try {
+        const { userId } = request.body;
+        const file = request.file;
+
+        if (!file || !userId) {
+            return response.status(400).json({
+                error: 'Image and user ID are required'
+            })
+        }
+
+        const imageUrl = `/uploads/${file.filename}`;
+        const extractedText = await OCRsementara(file.path);
+
+        const newReceipt = await prisma.receipt.create({
+            data: {
+                userId: parseInt(userId),
+                imageUrl,
+                extractedText
+            }
+        });
+        response.status(201).json({
+            message: 'Receipt created successfully',
+            receipt: newReceipt
+        })
+    } catch(error){
+        console.error('Error creating receipt:', error);
+        response.status(500).json({
+            error: 'Failed to create receipt'
+        })
+    }
+}
