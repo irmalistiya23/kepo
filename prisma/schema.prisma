@@ -17,6 +17,7 @@ model User {
   financialInsights FinancialInsight[]
   receiptScans ReceiptScan[]
   transactions Transaction[]
+  financialGoals FinancialGoal[]
 }
 
 model Category {
@@ -92,3 +93,26 @@ model OTP {
   time  String
 }
 
+
+model FinancialGoal {
+  id        Int          @id @default(autoincrement())
+  userId    Int
+  name      String
+  price     Decimal
+  startDate DateTime
+  endDate   DateTime
+  photoUrl  String?
+  createdAt DateTime     @default(now())
+
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  savings   GoalSaving[] 
+}
+
+model GoalSaving {
+  id        Int       @id @default(autoincrement())
+  goalId    Int
+  amount    Decimal
+  createdAt DateTime  @default(now())
+
+  goal      FinancialGoal @relation(fields: [goalId], references: [id])
+}
