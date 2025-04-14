@@ -2,6 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
+import { Line } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    LineElement,
+    PointElement,
+    LineController,
+    CategoryScale,
+    LinearScale,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  
+  ChartJS.register(LineElement, PointElement, LineController, CategoryScale, LinearScale, Tooltip, Legend);
+  
 import './index.css';
 
 type Activity = {
@@ -33,6 +47,40 @@ export default function Dashboard() {
   });
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filterType, setFilterType] = useState<'year' | 'month' | 'week'>('month');
+
+  const getFilteredChartData = () => {
+    // Data simulasi - idealnya ini berasal dari backend
+    const labels = filterType === 'year'
+      ? ['2022', '2023', '2024']
+      : filterType === 'month'
+        ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+        : ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'];
+  
+    const incomeData = labels.map(() => Math.floor(Math.random() * 1000000));
+    const expenseData = labels.map(() => Math.floor(Math.random() * 500000));
+  
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Pemasukan',
+          data: incomeData,
+          fill: false,
+          borderColor: '#4CAF50',
+          tension: 0.4,
+        },
+        {
+          label: 'Pengeluaran',
+          data: expenseData,
+          fill: false,
+          borderColor: '#F44336',
+          tension: 0.4,
+        },
+      ],
+    };
+  };
+  
 
   useEffect(() => {
     // Simulasi ambil data
@@ -145,13 +193,44 @@ export default function Dashboard() {
           )}
         </div>
   
-        <div className="card">
-          <h2>Laporan</h2>
-          {/* <p>Total Pemasukan: Rp.{reportStats.totalIncome.toLocaleString('id-ID')}</p>
-          <p>Total Pengeluaran: Rp.{reportStats.totalExpense.toLocaleString('id-ID')}</p>
-          <p>Sisa Uang: Rp.{reportStats.balance.toLocaleString('id-ID')}</p> */}
-          <button className="read-more" onClick={navigateToAnalysis}>Lihat Detail</button>
-        </div>
+<div className="card">
+  <h2>Grafik Keuangan</h2>
+  <select
+    value={filterType}
+    onChange={(e) => setFilterType(e.target.value as 'year' | 'month' | 'week')}
+    style={{ marginBottom: '10px', padding: '5px' }}
+  >
+    <option value="week">Mingguan</option>
+    <option value="month">Bulanan</option>
+    <option value="year">Tahunan</option>
+  </select>
+
+  <Line
+    data={getFilteredChartData()}
+    options={{
+      responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (ctx) {
+              return `Rp.${ctx.raw.toLocaleString('id-ID')}`;
+            },
+          },
+        },
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: (value) => `Rp.${value.toLocaleString('id-ID')}`,
+          },
+        },
+      },
+    }}
+  />
+  <button className="read-more" onClick={navigateToAnalysis}>Lihat Detail</button>
+
+</div>
+
       </div>
     </div>
   );
