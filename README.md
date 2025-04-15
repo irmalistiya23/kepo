@@ -1,43 +1,74 @@
-## Usage
+# KEPO - Kontrol Ekonomi Pribadi Online 💰
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+**KEPO** adalah aplikasi web yang bertujuan untuk meningkatkan literasi keuangan anak muda dan membantu mereka mengembangkan kebiasaan finansial yang lebih sehat.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+---
 
+## 🎯 Tujuan Proyek
+
+- Meningkatkan literasi keuangan anak muda
+- Membantu membangun kebiasaan finansial yang sehat dan teratur
+- Memberi pengalaman manajemen keuangan secara digital dan interaktif
+
+---
+
+## ✨ Fitur Utama
+
+- ✍️ Input pemasukan & pengeluaran
+- 🎯 Rekomendasi untuk mencapai goal menabung
+- 📊 Analisis keuangan pribadi
+- 📷 Pencatatan otomatis via **scan struk (OCR)**
+- 📚 Fitur edukasi keuangan berbasis artikel dan materi terpercaya
+
+---
+
+### 🛠️ Tools & Tech Stack
+
+**Front-End:**
+- React JS
+- Next.js
+- Tailwind CSS
+- TypeScript
+
+**Back-End:**
+- Node JS
+- Database: MySQL  
+- API Testing: Postman
+
+**OCR & Logic:**
+- Python
+- Tesseract OCR
+
+**Design:**
+- Figma
+
+### 💻 IDE & Referensi
+- IDE: VS Code  
+- Referensi Konten: Investopedia, Google Scholar
+
+---
+
+## 🚀 Cara Menjalankan Proyek
+
+### 1. Clone Repository
 ```bash
-$ npm install # or pnpm install or yarn install
+git clone https://github.com/irmalistiya23/kepo.git
+cd kepo
 ```
-
-## Exploring the template
-
-This template's goal is to showcase the routing features of Solid.
-It also showcase how the router and Suspense work together to parallelize data fetching tied to a route via the `.data.ts` pattern.
-
-You can learn more about it on the [`@solidjs/router` repository](https://github.com/solidjs/solid-router)
-
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
-
-## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+### 2. Install Dependensi
+```bash
+npm install
+```
+### 3. Jalankan development server:
+``` bash
+npm run dev
+```
+### 4. Build untuk production:
+``` bash
+npm run build
+```
+### 5. Akses di Browser
+``` bash
+http://localhost:3000
+```
+Atau port lain yang ditampilkan di terminal setelah `npm start`.
