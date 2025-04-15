@@ -49,12 +49,12 @@ const SendOTPPage = () => {
     }
   };
 
-  useEffect(() => {
-    const email = sessionStorage.getItem("email");
-    if (!email) {
-      router.push("/login/getOTP");
-    }
-  }, [router]);
+ // useEffect(() => {
+ //   const email = sessionStorage.getItem("email");
+ //   if (!email) {
+ //     router.push("/login/getOTP");
+ //   }
+ // }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
