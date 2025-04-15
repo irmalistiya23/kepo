@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import  { addSaving }  from '../controllers/goals.controller';
+import  { addSaving }  from '../controllers/goals.controller.js';
 
 const router = Router();
 

@@ -3,30 +3,30 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  name       String
-  email      String   @unique
-  password   String
-  createdAt  DateTime @default(now())
-  categories Category[]
+  id                Int                @id @default(autoincrement())
+  name              String
+  email             String             @unique
+  password          String
+  createdAt         DateTime           @default(now())
+  categories        Category[]
   financialInsights FinancialInsight[]
-  receiptScans ReceiptScan[]
-  transactions Transaction[]
-  financialGoals FinancialGoal[]
+  receiptScans      ReceiptScan[]
+  transactions      Transaction[]
+  financialGoals    FinancialGoal[]
 }
 
 model Category {
-  id        Int     @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   userId    Int?
   name      String
   type      CategoryType
-  createdAt DateTime @default(now())
-  user      User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  user      User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum CategoryType {
@@ -35,12 +35,12 @@ enum CategoryType {
 }
 
 model FinancialEducation {
-  id        Int     @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   title     String
   content   String?
   type      EducationType
   videoUrl  String?
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
 }
 
 enum EducationType {
@@ -50,34 +50,34 @@ enum EducationType {
 }
 
 model FinancialInsight {
-  id          Int     @id @default(autoincrement())
-  userId      Int
-  month       Int
-  totalIncome Decimal @default(0.00)
-  totalExpense Decimal @default(0.00)
-  balance     Decimal @default(0.00)
-  createdAt   DateTime @default(now())
-  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  month        Int
+  totalIncome  Decimal  @default(0.00) @db.Decimal(10,2)
+  totalExpense Decimal  @default(0.00) @db.Decimal(10,2)
+  balance      Decimal  @default(0.00) @db.Decimal(10,2)
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ReceiptScan {
-  id           Int     @id @default(autoincrement())
-  userId       Int
-  imageUrl     String
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  imageUrl      String
   extractedText String
-  createdAt    DateTime @default(now())
-  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Transaction {
-  id          Int     @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   userId      Int
-  amount      Decimal
+  amount      Decimal          @db.Decimal(10,2)
   category    String
   type        TransactionType
   description String?
-  createdAt   DateTime @default(now())
-  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum TransactionType {
@@ -85,34 +85,30 @@ enum TransactionType {
   expense
 }
 
-
 model OTP {
-  id    String @id @default(uuid())
-  key   String
-  otp   String @unique
-  time  String
+  id   String @id @default(uuid())
+  key  String
+  otp  String @unique
+  time String
 }
 
-
 model FinancialGoal {
-  id        Int          @id @default(autoincrement())
-  userId    Int
-  name      String
-  price     Decimal
-  startDate DateTime
-  endDate   DateTime
-  photoUrl  String?
-  createdAt DateTime     @default(now())
-
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade) 
-  savings   GoalSaving[] 
+  id         Int             @id @default(autoincrement())
+  userId     Int
+  name       String
+  price      Decimal         @db.Decimal(10,2)
+  startDate  DateTime
+  endDate    DateTime
+  photoUrl   String?
+  createdAt  DateTime        @default(now())
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  savings    GoalSaving[]
 }
 
 model GoalSaving {
-  id        Int       @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   goalId    Int
-  amount    Decimal
-  createdAt DateTime  @default(now())
-
-  goal      FinancialGoal @relation(fields: [goalId], references: [id])
+  amount    Decimal        @db.Decimal(10,2)
+  createdAt DateTime       @default(now())
+  goal      FinancialGoal  @relation(fields: [goalId], references: [id])
 }

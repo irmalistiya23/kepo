@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import  { createTransaction, createReceipt }  from '../controllers/transactions.controller';
-import { upload } from '../middleware/multer';
+import  { createTransaction, createReceipt }  from '../controllers/transactions.controller.js';
+import { upload } from '../middleware/multer.js';
 
 const router = Router();
 
