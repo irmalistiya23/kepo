@@ -1,7 +1,7 @@
 {
   "ignore": ["node_modules", "logs", "*.log"],
   "ext": "js,json,ts",
-  "exec": "node -optimize_for_size ./src/server.js",
+  "exec": "node -optimize_for_size ./server.js",
   "legacy-watch": true,
   "verbose": false,
   "delay": "2500"
