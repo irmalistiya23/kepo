@@ -1,11 +1,11 @@
 import express from "express";
-import router from "./routes/index.js";
+import router from "./src/routes/index.js";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 import cors from 'cors';
 import session from "express-session";
 import passport from "passport";
-import "./libs/OTPCleaner.js";
+import "./src/libs/OTPCleaner.js";
 dotenv.config();
 
 const app = express();
