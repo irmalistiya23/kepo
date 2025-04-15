@@ -1,0 +1,93 @@
+.dashboard-container {
+  padding: 30px;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  background-color: #fff8f2;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-row {
+  display: grid;
+  gap: 20px;
+}
+
+.row-top {
+  grid-template-columns: 3fr 2fr; /* 60% dan 40% */
+}
+
+.row-bottom {
+  grid-template-columns: 2fr 3fr; /* 40% dan 60% */
+}
+
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  border-left: 4px solid #F97316;
+  box-shadow: 0 8px 16px rgba(255, 167, 38, 0.15);
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-text {
+  flex: 1;
+}
+
+.card-image {
+  width: 200px;
+  height: auto;
+  margin-left: 10px;
+}  
+
+.card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.read-more {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #FFA726;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.activity-list li,
+.payment-list li {
+  background-color: #fffefc;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #f2eae0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.activity-list .income {
+  color: #4caf50;
+}
+
+.activity-list .expense {
+  color: #ef5350;
+}
+
+.created-at {
+  font-size: 0.85em;
+  color: #999;
+  margin-top: 4px;
+}
+
+select {
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 4px;
+}
