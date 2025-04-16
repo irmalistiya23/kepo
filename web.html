@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Handwriting to Text Conversion Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mini.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="..\static\mini.css">
+</head>
+
+<body style="background-color:#c7b1fa">
+    
+        <div class="fullbg">
+            <div class="d-flex flex-row justify-content-center">
+                <img src="https://res.cloudinary.com/dh9qqukqp/image/upload/v1696856136/handtotext_zwedyd.png" class="handimage" />
+                    <div class="d-flex flex-column justify-content-center">
+                        <h1 class="fonttext">Handwriting to Text</h1>
+                    </div>
+                <img src="https://res.cloudinary.com/dh9qqukqp/image/upload/v1696829675/logotexteditor_d8sb5p.png" class="logo" />
+                <div class="d-flex flex-column justify-content-center">
+                    <h1>OCR</h1>
+                    <p class="qote">Scan & Save in Seconds</p>
+                </div>
+            </div>
+        </div>
+        <div class="purplebg">          
+            <div class="d-flex flex-row justify-content-center">
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="image">
+                    <input type="submit" value="Upload the file">
+                </form>
+                <pre style:"font-family:Callisto MT">{{ message }}</pre>
+            </div>
+
+            <form action="/" method="post">
+                <div class="d-flex flex-row justify-content-center butdown">
+                    <button type="submit" class="btn btn-gradient">Run Python Script</button>
+                </div>
+            </form>
+
+            <div class="outputcard">
+                <p style="font-family:Century Gothic; text-align:center">OUTPUT</p>
+                <pre>{{ output }}</pre>
+            </div>
+
+            <form action="/summ" method="post">
+                <div class="d-flex flex-row justify-content-center butdown">
+                    <button type="submit" class="btn btn-pink-gradient ">Get Summary</button>
+                </div>
+            </form>
+
+            <div class ="outputcard">
+                <p style="font-family:Century Gothic; text-align: center">SUMMARY</p>
+                <pre>{{ summary }}</pre>
+            </div>
+
+
+            <div class="thumbs-slider">
+                <span class="thumb-icon" id="thumbs-up">&#x1F44D;</span>
+                <div class="custom-control custom-range" style="flex: 1;">
+                    <input type="range" class="custom-range" id="slider" min="0" max="1" step="1">
+                </div>
+                <span class="thumb-icon" id="thumbs-down">&#x1F44E;</span>
+            </div>
+
+            <marquee>
+                <div class="pad">
+                    <p class="dev" style="font-family:Segoe Script">Developed by HSR</p>
+                </div>
+            </marquee>
+
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-static-website/js/ccbp-ui-kit.js"></script>
+
+</body>
+
+</html>
