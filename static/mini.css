@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
+
+.fullbg {
+    background-color: black;
+    height: 30vh;
+    background-size: cover;
+
+    color: white;
+    font-family: "Bree+Serif";
+
+}
+
+.logo {
+    height: 150px;
+    width: 300px;
+    padding-top: 12px;
+}
+
+.qote {
+    font-family: "Roboto";
+    font-size: 28px;
+}
+
+.purplebg {
+    background-color: #c7b1fa;
+    height: 80vh;
+    padding: 10px;
+    padding-top: 50px;
+}
+
+.textcard {
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 20px;
+}
+
+.fonttext {
+    font-family: "Lobster";
+    font-size: 26px;
+    color: white;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+.handimage {
+    height: 150px;
+    width: 200px;
+    border-radius: 10px;
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+.pad {
+    margin-top: 10px;
+}
+
+.seccard {
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.carcard {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+
+    height: 200px;
+    width: 200px;
+    padding-top: 30px;
+}
+
+.butpad {
+    margin-top: 40px;
+}
+
+.dev {
+    font-size: 20px;
+    padding-right: 1px;
+    font-family: "Roboto";
+}
+
+.fullbg1 {
+    background-color: black;
+    height: 15vh;
+    background-size: cover;
+
+    color: white;
+    font-family: "Bree+Serif";
+
+}
+
+.logo1 {
+    height: 90px;
+    width: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    margin-right: 5px;
+    margin-left: 300px;
+}
+
+.back {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80px;
+
+}
+
+.btn-gradient {
+    background-image: linear-gradient(to right, #ff5f6d, #ffc371);
+    border: none;
+    color: white;
+    height: 50px;
+    width: 170px;
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.arrow-down {
+    display: inline-block;
+    margin-left: 5px;
+    /* Adjust this as needed for proper spacing */
+    vertical-align: middle;
+}
+
+.purplebg1 {
+    background-color: #c7b1fa;
+    height: 85vh;
+    padding: 10px;
+}
+
+.outputcard {
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 20px;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.btn-pink-gradient {
+    background-image: linear-gradient(to right, #f77ceb, #4f58f7);
+    border: none;
+    color: white;
+    height: 50px;
+    width: 170px;
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.download {
+    margin-left: 20px;
+}
+
+.butdown {
+    margin-top: 30px;
+}
+
+.thumbs-slider {
+    padding:15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.thumbs-slider .thumb-icon {
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.thumbs-slider .thumb-icon.active {
+    color: #007bff;
+    /* Active color (blue) */
+}
+
+input[type="submit"] {
+    background-color: rgb(255,10,150);
+    color: white;
+    padding: 12px 20px;
+    border: solid;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    background-color: rgb(205,100,255);
+    color: white;
+    padding: 10px 20px;
+    border: solid;
+    border-radius: 4px;
+    cursor: pointer;
+}

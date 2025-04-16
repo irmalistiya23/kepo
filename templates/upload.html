@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: black; 
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: orange; 
+        }
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        input[type="file"], input[type="submit"], button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        input[type="file"] {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"], button {
+            background-color: orange; 
+            color: white;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: darkorange; 
+        }
+        pre {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap; 
+            overflow: auto;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            form {
+                padding: 15px;
+            }
+        }
+        .centered-form {
+            display: flex;                
+            flex-direction: column;       
+            align-items: center;          
+            justify-content: center;      
+            margin-top: 10px; 
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; 
+            margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload an Image</h1>
+    <form action="/u" method="post" enctype="multipart/form-data" class="centered-form">
+        <input type="file" name="image" required>
+        <div class="button-container">
+            <input type="submit" value="Upload">
+        </div>
+    </form>
+
+    <h1>Run Python Script</h1>
+    <form action="/r" method="post">
+        <div class="button-container">
+            <button type="submit">Run Python Script</button>
+        </div>
+    </form>
+
+    <h1>Summarize</h1>
+    <form action="/sum" method="post">
+        <div class="button-container">
+            <button type="submit">Summarize</button>
+        </div>
+    </form>
+
+    {% if summary %}
+    <h1>Hasil Ringkasan</h1>
+    <pre>{{ summary }}</pre>
+    {% endif %}
+</body>
+</html>
